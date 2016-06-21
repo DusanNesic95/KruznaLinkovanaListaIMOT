@@ -33,6 +33,8 @@ public class Main {
 		}
 		
 		igra.zapocniIgru();
+		System.out.println();
+		igra.tokIgre();
 		
 		scan.close();
 		unosIgraca.close();

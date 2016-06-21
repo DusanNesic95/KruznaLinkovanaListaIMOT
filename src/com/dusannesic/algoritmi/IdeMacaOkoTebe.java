@@ -74,7 +74,7 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 		if (ponavljanja == 0) {
 			throw new RuntimeException("Dete ne ume da peva!");
 		} else {
-			int korak = 0;
+			int korak = 1;
 			Dete trenutni = prvi;
 			
 			while (korak < ponavljanja) {
