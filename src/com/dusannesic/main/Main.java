@@ -32,9 +32,7 @@ public class Main {
 			igra.dodajIgraca(noviIgrac);
 		}
 		
-		igra.zapocniIgru();
-		System.out.println();
-		igra.tokIgre();
+		igra.igrajIgru();
 		
 		scan.close();
 		unosIgraca.close();

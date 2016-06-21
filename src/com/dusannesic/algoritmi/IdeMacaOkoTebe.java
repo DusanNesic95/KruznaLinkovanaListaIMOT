@@ -1,5 +1,9 @@
 package com.dusannesic.algoritmi;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 
 	private Dete prvi;
@@ -63,12 +67,9 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 		
 		trenutni.setSledeciIgrac(noviPrvi);
 		prvi = noviPrvi;
-		
-		System.out.println("Trenutni igrac je: " + trenutniIgrac.getIme());
-		prikaziIgrace();
 	}
 	
-	public void tokIgre() {
+	private Dete tokIgre() {
 		int ponavljanja = trenutniIgrac.getBrojKoraka();
 		
 		if (ponavljanja == 0) {
@@ -82,7 +83,35 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 				korak++;
 			}
 			
-			System.out.println("Nakon prve runde, prvi igrac dosao je do: " + trenutni.getIme());
+			return trenutni;
 		}
+	}
+	
+	public void gotovaRunda(Dete sledeciIgrac) {
+		prvi = sledeciIgrac;
+		
+		Dete trenutni = prvi;
+		while (trenutni.getSledeciIgrac() != prvi) {
+			trenutni = trenutni.getSledeciIgrac();
+		}
+		
+		dodajIgraca(trenutniIgrac);		
+	}
+	
+	public void igrajIgru() {
+		List<Dete> decaKojaSuIgrala = new ArrayList<Dete>();
+		
+		Dete igrac = prvi;
+		zapocniIgru();
+		while (!decaKojaSuIgrala.contains(igrac)) {
+			decaKojaSuIgrala.add(igrac);
+			igrac = tokIgre();
+			gotovaRunda(igrac);
+			zapocniIgru();
+		}
+		
+		dodajIgraca(igrac);
+		
+		prikaziIgrace();
 	}
 }
