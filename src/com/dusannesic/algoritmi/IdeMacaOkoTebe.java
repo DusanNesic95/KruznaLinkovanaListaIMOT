@@ -11,16 +11,21 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 	public void dodajIgraca(Dete noviIgrac) {
 		Dete trenutni = prvi;
 		
-		if (trenutni.getSledeciIgrac() == null) {
-			trenutni.setSledeciIgrac(prvi);
+		if (prvi == null) {
+			prvi = noviIgrac;
 		} else {
-			while (trenutni.getSledeciIgrac() != prvi) {
-				trenutni = trenutni.getSledeciIgrac();
-			}			
+			if (trenutni.getSledeciIgrac() == null) {
+				trenutni.setSledeciIgrac(prvi);
+			} else {
+				while (trenutni.getSledeciIgrac() != prvi) {
+					trenutni = trenutni.getSledeciIgrac();
+				}			
+			}
+			
+			noviIgrac.setSledeciIgrac(prvi);
+			trenutni.setSledeciIgrac(noviIgrac);
 		}
 		
-		noviIgrac.setSledeciIgrac(prvi);
-		trenutni.setSledeciIgrac(noviIgrac);
 	}
 	
 	@Override
@@ -37,11 +42,11 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 				if (trenutni.getIme().equals(prvi.getIme())) {
 					System.out.println("Igrac: " + trenutni.getIme());
 				} else {
-					System.out.println(trenutni.getIme());					
+					System.out.println("Igrac: " + trenutni.getIme());					
 				}
 				trenutni = trenutni.getSledeciIgrac();
 			}
-			System.out.println(trenutni.getIme());
+			System.out.println("Igrac: " + trenutni.getIme());
 		}
 	}
 
@@ -59,8 +64,25 @@ public class IdeMacaOkoTebe implements KruznaLinkovanaLista {
 		trenutni.setSledeciIgrac(noviPrvi);
 		prvi = noviPrvi;
 		
-		System.out.println(prvi.getIme());
+		System.out.println("Trenutni igrac je: " + trenutniIgrac.getIme());
 		prikaziIgrace();
 	}
 	
+	public void tokIgre() {
+		int ponavljanja = trenutniIgrac.getBrojKoraka();
+		
+		if (ponavljanja == 0) {
+			throw new RuntimeException("Dete ne ume da peva!");
+		} else {
+			int korak = 0;
+			Dete trenutni = prvi;
+			
+			while (korak < ponavljanja) {
+				trenutni = trenutni.getSledeciIgrac();
+				korak++;
+			}
+			
+			System.out.println("Nakon prve runde, prvi igrac dosao je do: " + trenutni.getIme());
+		}
+	}
 }
